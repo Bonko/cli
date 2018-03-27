@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
 
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -13,19 +13,19 @@ var pingCmd = &cobra.Command{
 	Use:   "ping",
 	Short: "Ping the StormForger API",
 	Long:  `Ping the StormForger API and try to authenticate.`,
-	Run:   foo,
+	Run:   runPing,
 }
 
-func foo(cmd *cobra.Command, args []string) {
+func runPing(cmd *cobra.Command, args []string) {
 	client := NewClient()
 
 	status, err := client.Ping()
 
 	if !status {
-		fmt.Println(err)
+		log.Info(err)
 		os.Exit(-1)
 	} else {
-		log.Println("pong!")
+		fmt.Println("pong!")
 	}
 }
 
